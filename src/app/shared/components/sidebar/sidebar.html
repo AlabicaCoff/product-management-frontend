@@ -1,0 +1,47 @@
+<div
+  class="d-flex flex-column flex-shrink-0 p-3 bg-light border-end"
+  style="width: 250px; min-height: 100vh"
+>
+  <!-- Branding / Logo -->
+  <a
+    routerLink="/"
+    class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none"
+  >
+    <span class="fs-4 fw-bold">My App</span>
+  </a>
+  <hr />
+
+  <!-- Navigation Links -->
+  <ul class="nav nav-pills flex-column mb-auto">
+    <li class="nav-item">
+      <a
+        routerLink="/products"
+        routerLinkActive="active"
+        routerLinkActiveOptions="{ exact: true }"
+        class="nav-link link-dark"
+        aria-current="page"
+      >
+        Products
+      </a>
+    </li>
+    <li class="nav-item">
+      <a routerLink="/categories" routerLinkActive="active" class="nav-link link-dark pe-auto">
+        Categories
+      </a>
+    </li>
+  </ul>
+
+  <!-- Optional Bottom Section (e.g., User logout) -->
+  <hr />
+  <div class="dropdown">
+    <a
+      href="/logout"
+      class="d-flex align-items-center link-dark text-decoration-none"
+      id="dropdownUser"
+      data-bs-toggle="dropdown"
+      aria-expanded="false"
+    >
+      <strong>Logout</strong>
+    </a>
+  </div>
+</div>
