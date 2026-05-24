@@ -87,9 +87,9 @@
         </div>
 
         <!-- show validation message if error occurred -->
-        @if (errorMessage) {
+        @if (errorMessage()) {
           <div class="error-message">
-            <p>{{ errorMessage }}</p>
+            <p>{{ errorMessage() }}</p>
           </div>
         }
 

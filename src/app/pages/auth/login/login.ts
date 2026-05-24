@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormGroup, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { LoginRequest, LoginResponse } from '../../../core/models/login-model';
@@ -14,7 +14,7 @@ import { CookieService } from 'ngx-cookie-service';
 export class Login {
   // Variables
   currentYear: number = new Date().getFullYear();
-  errorMessage: string = '';
+  errorMessage = signal('');
 
   loginForm: FormGroup = new FormGroup({
     userName: new FormControl('', Validators.required),
@@ -56,15 +56,14 @@ export class Login {
           // Redirect to Home
           this.router.navigateByUrl('/');
         } else {
-          this.errorMessage = response.failureMessage ?? 'Invalid login credentials.';
+          this.errorMessage.set(response.failureMessage ?? 'Invalid login credentials.');
         }
       },
       error: (error) => {
         if (error.status === 401) {
-          this.errorMessage =
-            error.error?.failureMessage ?? 'Invalid login credentials.';
+          this.errorMessage.set(error.error?.failureMessage ?? 'Invalid login credentials.');
         } else {
-          this.errorMessage = 'An unexpected error occurred.';
+          this.errorMessage.set('An unexpected error occurred.');
         }
       },
     });
