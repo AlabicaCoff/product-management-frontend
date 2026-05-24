@@ -1,4 +1,4 @@
-<div class="d-flex justify-content-between align-items-center px-4">
+<div class="d-flex justify-content-between align-items-center">
   <div class="welcome-text">
     <span class="d-block fw-semibold fs-5">Hello, {{ user?.userName }}</span>
     <span class="d-block text-secondary fs-6">Have a nice day</span>
@@ -21,24 +21,7 @@
         <span class="d-block fw-semibold fs-6">{{ user?.userName }}</span>
         <span class="d-block">{{ user?.role }}</span>
       </div>
-
-      <div class="dropdown">
-        <button
-          class="btn fs-5 ms-2 p-2 dropdown-toggle"
-          type="button"
-          id="userDropdown"
-          data-bs-toggle="dropdown"
-          aria-expanded="false"
-        >
-          <i class="bi bi-chevron-down"></i>
-        </button>
-
-        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
-          <li>
-            <a class="logout-btn dropdown-item text-danger" href="#" (click)="onLogout()">Logout</a>
-          </li>
-        </ul>
-      </div>
+      <hr />
     </div>
   </div>
 </div>
