@@ -1,11 +1,16 @@
 import { Component, inject, Signal, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Category, CreateCategoryRequest, UpdateCategoryRequest } from '../../../core/models/category-model';
+import {
+  Category,
+  CreateCategoryRequest,
+  UpdateCategoryRequest,
+} from '../../../core/models/category-model';
 import { CategoryService } from '../../../core/services/category/category-service';
-import { EditCategoryModal } from "./components/edit-category-modal/edit-category-modal";
+import { EditCategoryModal } from './components/edit-category-modal/edit-category-modal';
 import { ComfirmModal } from '../../../shared/components/comfirm-modal/comfirm-modal';
 import { AddCategoryModal } from './components/add-category-modal/add-category-modal';
+import { AuthService } from '../../../core/services/auth/auth-service';
 
 @Component({
   selector: 'app-list-category',
@@ -19,6 +24,9 @@ export class ListCategory {
   isLoading = signal(false);
   errorMessage: string = '';
   successMessage: string = '';
+
+  // User Permission
+  isAdmin = signal(false);
 
   // Delete modal state
   showDeleteModal: boolean = false;
@@ -34,16 +42,18 @@ export class ListCategory {
   // Edit modal state
   showEditModal: boolean = false;
   categoryToEdit: Category | null = null;
-  editForm: UpdateCategoryRequest  = { name: '', description: '' };
+  editForm: UpdateCategoryRequest = { name: '', description: '' };
   isUpdating = signal(false);
   editErrorMessage: string = '';
 
   // Injects
   private categoryService = inject(CategoryService);
+  private authService = inject(AuthService);
 
   // Lifecycle
   ngOnInit(): void {
     this.getAllCategories();
+    this.isAdmin.set(this.authService.isAdmin());
   }
 
   // --- Data Fetching ---
@@ -78,9 +88,7 @@ export class ListCategory {
     this.isDeleting.set(true);
     this.categoryService.deleteCategory(this.categoryToDelete.id).subscribe({
       next: () => {
-        this.categories = this.categories.filter(
-          (c) => c.id !== this.categoryToDelete!.id
-        );
+        this.categories = this.categories.filter((c) => c.id !== this.categoryToDelete!.id);
         this.isDeleting.set(false);
         this.closeDeleteModal();
         this.showSuccess('Category deleted successfully.');
@@ -135,25 +143,21 @@ export class ListCategory {
   confirmEdit(editForm: UpdateCategoryRequest): void {
     if (!this.categoryToEdit) return;
     this.isUpdating.set(true);
-    this.categoryService
-      .updateCategory(this.categoryToEdit.id, editForm)
-      .subscribe({
-        next: () => {
-          const idx = this.categories.findIndex(
-            (c) => c.id === this.categoryToEdit!.id
-          );
-          if (idx !== -1) {
-            this.categories[idx] = { ...this.categories[idx], ...editForm };
-          }
-          this.isUpdating.set(false);
-          this.closeEditModal();
-          this.showSuccess('Category updated successfully.');
-        },
-        error: () => {
-          this.editErrorMessage = 'Failed to update category. Please try again.';
-          this.isUpdating.set(false);
-        },
-      });
+    this.categoryService.updateCategory(this.categoryToEdit.id, editForm).subscribe({
+      next: () => {
+        const idx = this.categories.findIndex((c) => c.id === this.categoryToEdit!.id);
+        if (idx !== -1) {
+          this.categories[idx] = { ...this.categories[idx], ...editForm };
+        }
+        this.isUpdating.set(false);
+        this.closeEditModal();
+        this.showSuccess('Category updated successfully.');
+      },
+      error: () => {
+        this.editErrorMessage = 'Failed to update category. Please try again.';
+        this.isUpdating.set(false);
+      },
+    });
   }
 
   // --- Helpers ---
