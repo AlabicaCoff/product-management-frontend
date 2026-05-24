@@ -35,7 +35,6 @@ export class Login {
 
     this.authService.login(loginRequest).subscribe({
       next: (response: LoginResponse) => {
-        console.log(response)
         if (response.isLoginSuccess) {
           // Set Auth Cookie
           this.cookieService.set(
