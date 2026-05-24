@@ -22,6 +22,7 @@ This section offers a basic tutorial to tell you how to set up the Angular UI pr
 * [VS Code](https://code.visualstudio.com/download)
 * [Node.js](https://nodejs.org/en/download)
 * [Angular CLI v21.0.4](https://angular.dev/tools/cli/setup-local)
+* [Docker](https://www.docker.com/) (Optional)
 
 ## Installation Guide
 * Clone this repository to your local machine. 
@@ -35,10 +36,21 @@ This section offers a basic tutorial to tell you how to set up the Angular UI pr
 * **Default Login:** Use the mock credentials provided by the backend:
   * for **admin user** use: username: `Admin@ProductManagement.com`, password: `Admin@123`
   * for **non-admin user** use: username: `NonAdmin@ProductManagement.com`, password: `NonAdmin@123`
+ 
+## Docker (Optional)
+* Run `docker build -t product-management-frontend .` to build image
+* Run this below command to start container
+```
+ docker run -p 8080:80 -d \
+ -e API_BASE_URL=http://localhost:8081 \
+ --name product-management-frontend product-management-frontend
+```
+* Go to `http://localhost:8080/` in your browser to see the website.
 
 ## Technologies Used
 * [Node.js](https://nodejs.org/)
 * [Angular v21](https://angular.dev/)
+* [Docker](https://www.docker.com/)
 
 ## Authors
 * [AlabicaCoff](https://github.com/AlabicaCoff)
