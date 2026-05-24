@@ -48,4 +48,9 @@ export class AuthService {
     localStorage.setItem('user-username', user.userName);
     localStorage.setItem('user-roles', user.roles.join(','));
   }
+
+  isAdmin(): boolean {
+    const user = this.getUser();
+    return user?.roles?.includes('Admin') || false;
+  }
 }

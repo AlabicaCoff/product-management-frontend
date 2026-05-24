@@ -1,0 +1,77 @@
+<div class="modal-backdrop" (click)="closeModal()">
+  <div class="modal-card modal-card--view" (click)="$event.stopPropagation()" id="view-modal">
+    @if (product) {
+      <div class="modal-header">
+        <div class="modal-icon-wrap modal-icon-wrap--primary">
+          <i class="bi bi-box-seam"></i>
+        </div>
+        <div class="header-text">
+          <h2 class="modal-title">{{ product.name }}</h2>
+          <div class="price-stock">
+            <span class="price-badge">${{ product.price }}</span>
+            <span class="badge" [class.badge-low]="product.stock < 10" [class.badge-ok]="product.stock >= 10">
+              {{ product.stock }} in stock
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div class="view-content">
+        <!-- Description -->
+        <div class="detail-group">
+          <span class="detail-label">Description</span>
+          <p class="detail-value">{{ product.description || 'No description provided.' }}</p>
+        </div>
+
+        <!-- Categories -->
+        <div class="detail-group">
+          <span class="detail-label">Categories</span>
+          <div class="categories-list">
+            @if (product.categories && product.categories.length > 0) {
+              @for (cat of product.categories; track cat) {
+                <span class="inline-cat-badge">{{ cat }}</span>
+              }
+            } @else {
+              <span class="text-muted">No categories</span>
+            }
+          </div>
+        </div>
+
+        <!-- Dates -->
+        <div class="detail-row">
+          <div class="detail-group flex-1">
+            <span class="detail-label">Created Date</span>
+            <p class="detail-value text-sm">{{ product.createdDate | date:'medium' }}</p>
+          </div>
+          <div class="detail-group flex-1">
+            <span class="detail-label">Updated Date</span>
+            <p class="detail-value text-sm">{{ product.updatedDate | date:'medium' }}</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-actions">
+        <button
+          class="btn-modal btn-modal--delete"
+          (click)="onDelete()"
+        >
+          <i class="bi bi-trash3"></i> Delete
+        </button>
+        <div class="right-actions">
+          <button
+            class="btn-modal btn-modal--cancel"
+            (click)="closeModal()"
+          >
+            Close
+          </button>
+          <button
+            class="btn-modal btn-modal--primary"
+            (click)="onEdit()"
+          >
+            <i class="bi bi-pencil"></i> Edit Product
+          </button>
+        </div>
+      </div>
+    }
+  </div>
+</div>

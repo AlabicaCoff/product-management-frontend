@@ -1,0 +1,132 @@
+<div class="modal-backdrop" (click)="closeEditModal()">
+  <div class="modal-card modal-card--edit" (click)="$event.stopPropagation()" id="edit-modal">
+    <div class="modal-icon-wrap modal-icon-wrap--primary">
+      <i class="bi bi-pencil-fill"></i>
+    </div>
+    <h2 class="modal-title">Edit Product</h2>
+    <p class="modal-desc">Update the details for this product.</p>
+
+    <form class="edit-form" [formGroup]="form">
+      <!-- Name -->
+      <div class="edit-form-group">
+        <label for="edit-name" class="edit-label">Name <span class="required">*</span></label>
+        <input
+          id="edit-name"
+          type="text"
+          class="edit-input"
+          placeholder="Product name"
+          formControlName="name"
+          [class.input-error]="form.controls['name'].invalid && form.controls['name'].touched"
+        />
+        @if (form.controls['name'].invalid && form.controls['name'].touched) {
+          <span class="field-error">Name is required.</span>
+        }
+      </div>
+
+      <!-- Description -->
+      <div class="edit-form-group">
+        <label for="edit-description" class="edit-label">Description</label>
+        <textarea
+          id="edit-description"
+          class="edit-input edit-textarea"
+          placeholder="Product description (optional)"
+          formControlName="description"
+          rows="3"
+        ></textarea>
+      </div>
+
+      <!-- Price & Stock -->
+      <div class="form-row">
+        <div class="edit-form-group flex-1">
+          <label for="edit-price" class="edit-label">Price ($) <span class="required">*</span></label>
+          <input
+            id="edit-price"
+            type="number"
+            class="edit-input"
+            placeholder="0.00"
+            formControlName="price"
+            [class.input-error]="form.controls['price'].invalid && form.controls['price'].touched"
+            min="0"
+            step="0.01"
+          />
+        </div>
+        <div class="edit-form-group flex-1">
+          <label for="edit-stock" class="edit-label">Stock <span class="required">*</span></label>
+          <input
+            id="edit-stock"
+            type="number"
+            class="edit-input"
+            placeholder="0"
+            formControlName="stock"
+            [class.input-error]="form.controls['stock'].invalid && form.controls['stock'].touched"
+            min="0"
+            step="1"
+          />
+        </div>
+      </div>
+
+      <!-- Categories (Multi-select Dropdown) -->
+      <div class="edit-form-group">
+        <label class="edit-label">Categories</label>
+        <div class="custom-multi-select" [class.open]="dropdownOpen">
+          <div class="select-header" (click)="toggleDropdown()">
+            @if (form.value.categoryIds?.length === 0) {
+              <span class="select-placeholder">Select categories...</span>
+            } @else {
+              <div class="selected-pills">
+                @for (catId of form.value.categoryIds; track catId) {
+                  <span class="select-pill">{{ getCategoryName(catId) }}</span>
+                }
+              </div>
+            }
+            <i class="bi bi-chevron-down toggle-icon"></i>
+          </div>
+          
+          @if (dropdownOpen) {
+            <div class="select-dropdown">
+              @if (categoriesList.length === 0) {
+                <div class="dropdown-empty">No categories available</div>
+              } @else {
+                @for (category of categoriesList; track category.id) {
+                  <label class="dropdown-item">
+                    <input 
+                      type="checkbox" 
+                      [checked]="form.value.categoryIds?.includes(category.id)"
+                      (change)="onCategoryChange($event, category.id)"
+                    >
+                    <span>{{ category.name }}</span>
+                  </label>
+                }
+              }
+            </div>
+          }
+        </div>
+      </div>
+    </form>
+
+    <div class="modal-actions">
+      <button
+        class="btn-modal btn-modal--cancel"
+        (click)="closeEditModal()"
+        id="edit-cancel-btn"
+        [disabled]="isUpdating"
+      >
+        Cancel
+      </button>
+      <button
+        class="btn-modal btn-modal--primary"
+        (click)="confirmEdit()"
+        id="edit-confirm-btn"
+        [disabled]="isUpdating || form.invalid"
+      >
+        @if (isUpdating) {
+          <span class="btn-spinner"></span>
+          Saving…
+        } @else {
+          <i class="bi bi-save2"></i>
+          Save Changes
+        }
+      </button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,348 @@
+/* =============================================
+   Edit Product Modal Styles
+   ============================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+:host {
+  font-family: 'Inter', sans-serif;
+}
+
+/* ---- Backdrop ---- */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.55);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 1rem;
+  animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* ---- Modal Card ---- */
+.modal-card {
+  background: #fff;
+  border-radius: 20px;
+  padding: 2.25rem 2rem;
+  width: 100%;
+  max-width: 420px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.18);
+  text-align: center;
+  animation: popUp 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes popUp {
+  from { opacity: 0; transform: scale(0.88); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+.modal-card--edit {
+  max-width: 480px;
+  text-align: left;
+}
+
+/* ---- Icon Wrap ---- */
+.modal-icon-wrap {
+  width: 62px;
+  height: 62px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.25rem;
+  font-size: 1.5rem;
+}
+
+.modal-card--edit .modal-icon-wrap {
+  display: flex;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.modal-icon-wrap--primary {
+  background: #e8f0fe;
+  color: #0d6efd;
+}
+
+/* ---- Typography ---- */
+.modal-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #1a1a2e;
+  margin: 0 0 0.5rem;
+}
+
+.modal-card--edit .modal-title,
+.modal-card--edit .modal-desc {
+  text-align: center;
+}
+
+.modal-desc {
+  font-size: 0.875rem;
+  color: #6c757d;
+  margin: 0 0 1.75rem;
+  line-height: 1.6;
+}
+
+/* ---- Form ---- */
+.edit-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 1.75rem;
+  text-align: left;
+}
+
+.edit-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.form-row {
+  display: flex;
+  gap: 1rem;
+}
+
+.flex-1 {
+  flex: 1;
+}
+
+.edit-label {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #343a40;
+}
+
+.required {
+  color: #dc2626;
+}
+
+.edit-input {
+  width: 100%;
+  padding: 0.65rem 0.9rem;
+  font-size: 0.9rem;
+  font-family: 'Inter', sans-serif;
+  border: 1.5px solid #dee2e6;
+  border-radius: 10px;
+  background: #fff;
+  color: #212529;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  box-sizing: border-box;
+}
+
+.edit-input:focus {
+  outline: none;
+  border-color: #0d6efd;
+  box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.12);
+}
+
+.edit-input.input-error {
+  border-color: #dc2626;
+}
+
+.edit-textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.field-error {
+  font-size: 0.78rem;
+  color: #dc2626;
+  font-weight: 500;
+}
+
+/* ---- Multi-select Dropdown ---- */
+.custom-multi-select {
+  position: relative;
+  width: 100%;
+}
+
+.select-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  min-height: 42px;
+  padding: 0.45rem 0.9rem;
+  border: 1.5px solid #dee2e6;
+  border-radius: 10px;
+  background: #fff;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.custom-multi-select.open .select-header {
+  border-color: #0d6efd;
+  box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.12);
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.select-placeholder {
+  color: #6c757d;
+  font-size: 0.9rem;
+}
+
+.selected-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.select-pill {
+  background: #f1f3f5;
+  color: #495057;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.2rem 0.5rem;
+  border-radius: 6px;
+}
+
+.toggle-icon {
+  color: #adb5bd;
+  transition: transform 0.2s ease;
+}
+
+.custom-multi-select.open .toggle-icon {
+  transform: rotate(180deg);
+}
+
+.select-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: #fff;
+  border: 1.5px solid #dee2e6;
+  border-top: none;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  max-height: 200px;
+  overflow-y: auto;
+  z-index: 10;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  padding: 0.5rem 0;
+}
+
+.dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.dropdown-item:hover {
+  background: #f8f9fa;
+}
+
+.dropdown-item input[type="checkbox"] {
+  accent-color: #0d6efd;
+  width: 1rem;
+  height: 1rem;
+  cursor: pointer;
+}
+
+.dropdown-item span {
+  font-size: 0.85rem;
+  color: #212529;
+}
+
+.dropdown-empty {
+  padding: 1rem;
+  text-align: center;
+  color: #adb5bd;
+  font-size: 0.85rem;
+}
+
+/* ---- Action Buttons ---- */
+.modal-actions {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: flex-end;
+}
+
+.btn-modal {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.65rem 1.4rem;
+  border: none;
+  border-radius: 10px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  font-family: 'Inter', sans-serif;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-modal:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+.btn-modal--cancel {
+  background: #f1f3f5;
+  color: #495057;
+}
+
+.btn-modal--cancel:not(:disabled):hover {
+  background: #e9ecef;
+}
+
+.btn-modal--primary {
+  background: linear-gradient(135deg, #0d6efd 0%, #0a58ca 100%);
+  color: #fff;
+  box-shadow: 0 4px 14px rgba(13, 110, 253, 0.3);
+}
+
+.btn-modal--primary:not(:disabled):hover {
+  box-shadow: 0 6px 20px rgba(13, 110, 253, 0.4);
+  transform: translateY(-1px);
+}
+
+/* ---- Spinner ---- */
+.btn-spinner {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+  flex-shrink: 0;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ---- Responsive ---- */
+@media (max-width: 576px) {
+  .modal-card {
+    padding: 1.75rem 1.25rem;
+  }
+
+  .modal-actions {
+    flex-direction: column-reverse;
+  }
+
+  .btn-modal {
+    justify-content: center;
+    width: 100%;
+  }
+}

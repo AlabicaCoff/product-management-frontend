@@ -1,1 +1,348 @@
-<p>list-product works!</p>
+<!-- Page Header -->
+<div class="page-header">
+  <div class="page-header-left">
+    <div class="page-icon-wrap">
+      <i class="bi bi-box-seam-fill page-icon"></i>
+    </div>
+    <div>
+      <h1 class="page-title">Products</h1>
+      <p class="page-subtitle">Manage your inventory products</p>
+    </div>
+  </div>
+  <div class="page-header-right">
+    <button
+      class="btn-primary"
+      (click)="openAddModal()"
+      id="add-product-btn"
+      [hidden]="!isAdmin()"
+    >
+      <i class="bi bi-plus-lg"></i>
+      <span>Add Product</span>
+    </button>
+  </div>
+</div>
+
+<!-- Success Toast -->
+@if (successMessage) {
+  <div class="toast-success" role="alert">
+    <i class="bi bi-check-circle-fill"></i>
+    <span>{{ successMessage }}</span>
+  </div>
+}
+
+<!-- Error Banner -->
+@if (errorMessage) {
+  <div class="error-banner" role="alert">
+    <i class="bi bi-exclamation-triangle-fill"></i>
+    <span>{{ errorMessage }}</span>
+  </div>
+}
+
+<!-- Table Card -->
+@if (!errorMessage) {
+  <div class="table-card">
+    <div class="table-toolbar">
+      <!-- Category Filter -->
+      <div class="category-filters">
+        <span class="filter-label">Categories:</span>
+        <div class="custom-multi-select" [class.open]="dropdownOpen" style="min-width: 250px;">
+          <div class="select-header" (click)="toggleDropdown()">
+            @if (paginationRequest.categories.length === 0) {
+              <span class="select-placeholder">All Categories</span>
+            } @else {
+              <div class="selected-pills">
+                @for (catId of paginationRequest.categories; track catId) {
+                  <span class="select-pill">{{ getCategoryName(catId) }}</span>
+                }
+              </div>
+            }
+            <i class="bi bi-chevron-down toggle-icon"></i>
+          </div>
+          
+          @if (dropdownOpen) {
+            <div class="select-dropdown">
+              @if (categoriesList.length === 0) {
+                <div class="dropdown-empty">No categories available</div>
+              } @else {
+                @for (category of categoriesList; track category.id) {
+                  <label class="dropdown-item">
+                    <input 
+                      type="checkbox" 
+                      [checked]="paginationRequest.categories.includes(category.id)"
+                      (change)="toggleCategory(category.id)"
+                    >
+                    <span>{{ category.name }}</span>
+                  </label>
+                }
+              }
+            </div>
+          }
+        </div>
+      </div>
+
+      <div class="search-box">
+        <i class="bi bi-search"></i>
+        <input 
+          type="text" 
+          placeholder="Search products..." 
+          [(ngModel)]="paginationRequest.search"
+          (keyup.enter)="onSearch()"
+        >
+      </div>
+    </div>
+
+    @if (!isLoading() && products.length === 0) {
+      <div class="empty-state">
+        <div class="empty-icon-wrap">
+          <i class="bi bi-inbox empty-icon"></i>
+        </div>
+        <p class="empty-title">No products found</p>
+        <p class="empty-desc">Try adjusting your search or add a new product.</p>
+      </div>
+    } @else {
+      <div class="table-responsive">
+        <table class="data-table" id="products-table">
+          <thead>
+            <tr>
+              <th class="col-no">#</th>
+              <th class="col-product sortable-header" (click)="sortBy(OrderByEnum.name)">
+                Product
+                <i class="bi" 
+                   [class.bi-chevron-expand]="paginationRequest.orderBy !== OrderByEnum.name"
+                   [class.bi-chevron-up]="paginationRequest.orderBy === OrderByEnum.name && paginationRequest.orderDirection === OrderDirectionEnum.ASC"
+                   [class.bi-chevron-down]="paginationRequest.orderBy === OrderByEnum.name && paginationRequest.orderDirection === OrderDirectionEnum.DESC"
+                ></i>
+              </th>
+              <th class="col-price sortable-header" (click)="sortBy(OrderByEnum.price)">
+                Price
+                <i class="bi" 
+                   [class.bi-chevron-expand]="paginationRequest.orderBy !== OrderByEnum.price"
+                   [class.bi-chevron-up]="paginationRequest.orderBy === OrderByEnum.price && paginationRequest.orderDirection === OrderDirectionEnum.ASC"
+                   [class.bi-chevron-down]="paginationRequest.orderBy === OrderByEnum.price && paginationRequest.orderDirection === OrderDirectionEnum.DESC"
+                ></i>
+              </th>
+              <th class="col-stock sortable-header" (click)="sortBy(OrderByEnum.stock)">
+                Stock
+                <i class="bi" 
+                   [class.bi-chevron-expand]="paginationRequest.orderBy !== OrderByEnum.stock"
+                   [class.bi-chevron-up]="paginationRequest.orderBy === OrderByEnum.stock && paginationRequest.orderDirection === OrderDirectionEnum.ASC"
+                   [class.bi-chevron-down]="paginationRequest.orderBy === OrderByEnum.stock && paginationRequest.orderDirection === OrderDirectionEnum.DESC"
+                ></i>
+              </th>
+              <th class="col-date sortable-header" (click)="sortBy(OrderByEnum.createdDate)">
+                Created Date
+                <i class="bi" 
+                   [class.bi-chevron-expand]="paginationRequest.orderBy !== OrderByEnum.createdDate"
+                   [class.bi-chevron-up]="paginationRequest.orderBy === OrderByEnum.createdDate && paginationRequest.orderDirection === OrderDirectionEnum.ASC"
+                   [class.bi-chevron-down]="paginationRequest.orderBy === OrderByEnum.createdDate && paginationRequest.orderDirection === OrderDirectionEnum.DESC"
+                ></i>
+              </th>
+              <th class="col-date sortable-header" (click)="sortBy(OrderByEnum.updatedDate)">
+                Updated Date
+                <i class="bi" 
+                   [class.bi-chevron-expand]="paginationRequest.orderBy !== OrderByEnum.updatedDate"
+                   [class.bi-chevron-up]="paginationRequest.orderBy === OrderByEnum.updatedDate && paginationRequest.orderDirection === OrderDirectionEnum.ASC"
+                   [class.bi-chevron-down]="paginationRequest.orderBy === OrderByEnum.updatedDate && paginationRequest.orderDirection === OrderDirectionEnum.DESC"
+                ></i>
+              </th>
+              <th class="col-actions">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            @if (isLoading()) {
+              @for (i of [1, 2, 3, 4, 5]; track i) {
+                <tr class="table-row skeleton-row-table">
+                  <td class="col-no"><div class="skeleton-cell skeleton-sm"></div></td>
+                  <td class="col-product">
+                    <div class="product-info-cell">
+                      <div class="skeleton-cell" style="width: 64px; height: 64px; border-radius: 12px; flex-shrink: 0;"></div>
+                      <div class="product-details" style="flex: 1; gap: 0.35rem;">
+                        <div class="skeleton-cell skeleton-md" style="margin-bottom: 0.15rem;"></div>
+                        <div class="skeleton-cell skeleton-lg" style="height: 12px;"></div>
+                        <div class="skeleton-cell skeleton-sm" style="height: 12px; margin-top: 0.15rem;"></div>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="col-price"><div class="skeleton-cell" style="width: 60px;"></div></td>
+                  <td class="col-stock"><div class="skeleton-cell" style="width: 70px;"></div></td>
+                  <td class="col-date"><div class="skeleton-cell" style="width: 100px;"></div></td>
+                  <td class="col-date"><div class="skeleton-cell" style="width: 100px;"></div></td>
+                  <td class="col-actions">
+                    <div style="display: flex; gap: 0.5rem; justify-content: flex-end;">
+                      <div class="skeleton-cell" style="width: 32px; height: 32px; border-radius: 8px;"></div>
+                      <div class="skeleton-cell" style="width: 32px; height: 32px; border-radius: 8px;"></div>
+                    </div>
+                  </td>
+                </tr>
+              }
+            } @else {
+              @for (product of products; track product.id; let i = $index) {
+                <tr class="table-row">
+                  <td class="col-no">
+                    <span class="row-num">{{ (paginationRequest.pageNumber - 1) * paginationRequest.pageSize + i + 1 }}</span>
+                  </td>
+                  <td class="col-product">
+                    <div class="product-info-cell">
+                      <img 
+                        class="product-img" 
+                        [src]="'https://ui-avatars.com/api/?name=' + product.name + '&background=random&size=150'" 
+                        [alt]="product.name"
+                      >
+                      <div class="product-details">
+                        <span class="prod-name">{{ product.name }}</span>
+                        <span class="prod-desc">{{ product.description || 'No description' }}</span>
+                        <div class="prod-categories">
+                           @for (cat of product.categories; track cat) {
+                             <span class="inline-cat-badge">{{ cat }}</span>
+                           }
+                        </div>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="col-price">
+                    <span class="prod-price">${{ product.price }}</span>
+                  </td>
+                  <td class="col-stock">
+                    <span class="badge" [class.badge-low]="product.stock < 10" [class.badge-ok]="product.stock >= 10">
+                      {{ product.stock }} in stock
+                    </span>
+                  </td>
+                  <td class="col-date">
+                    <span class="date-text">{{ product.createdDate | date:'MMM d, y, h:mm a' }}</span>
+                  </td>
+                  <td class="col-date">
+                    <span class="date-text">{{ product.updatedDate | date:'MMM d, y, h:mm a' }}</span>
+                  </td>
+                  <td class="col-actions">
+                    <div class="action-btns">
+                    <button
+                      class="btn-action btn-view"
+                      (click)="openViewModal(product)"
+                      [id]="'view-btn-' + product.id"
+                      title="View product"
+                    >
+                      <i class="bi bi-eye-fill"></i>
+                    </button>
+                    <button
+                      class="btn-action btn-edit"
+                      (click)="openEditModal(product)"
+                      [id]="'edit-btn-' + product.id"
+                      title="Edit product"
+                      [hidden]="!isAdmin()"
+                    >
+                      <i class="bi bi-pencil-fill"></i>
+                    </button>
+                    <button
+                      class="btn-action btn-delete"
+                      (click)="openDeleteModal(product)"
+                      [id]="'delete-btn-' + product.id"
+                      title="Delete product"
+                      [hidden]="!isAdmin()"
+                    >
+                      <i class="bi bi-trash3-fill"></i>
+                    </button>
+                  </div>
+                  </td>
+                </tr>
+              }
+            }
+          </tbody>
+        </table>
+      </div>
+
+      @if (!isLoading()) {
+        <div class="table-footer pagination-footer">
+          <div class="pagination-left">
+            <span class="table-count">
+              Showing <strong>{{ products.length }}</strong> of <strong>{{ totalCount }}</strong> products
+            </span>
+            <div class="page-size-selector">
+              <label for="pageSize" class="page-size-label">Rows per page:</label>
+              <select 
+                id="pageSize" 
+                class="page-size-select" 
+                [(ngModel)]="paginationRequest.pageSize" 
+                (change)="onPageSizeChange()"
+              >
+                <option [ngValue]="5">5</option>
+                <option [ngValue]="10">10</option>
+                <option [ngValue]="20">20</option>
+                <option [ngValue]="50">50</option>
+              </select>
+            </div>
+          </div>
+          <div class="pagination-controls">
+            <button 
+              class="btn-page" 
+              [disabled]="paginationRequest.pageNumber === 1"
+              (click)="prevPage()"
+            >
+              <i class="bi bi-chevron-left"></i>
+            </button>
+            <span class="page-info">Page {{ paginationRequest.pageNumber }} of {{ totalPages }}</span>
+            <button 
+              class="btn-page" 
+              [disabled]="paginationRequest.pageNumber >= totalPages"
+              (click)="nextPage()"
+            >
+              <i class="bi bi-chevron-right"></i>
+            </button>
+          </div>
+        </div>
+      }
+    }
+  </div>
+}
+
+<!-- ============================
+     DELETE CONFIRMATION MODAL (shared component)
+     ============================ -->
+@if (showDeleteModal) {
+  <app-comfirm-modal
+    title="Delete Product"
+    [message]="'Are you sure you want to delete &quot;' + productToDelete?.name + '&quot;?'"
+    confirmLabel="Delete"
+    iconClass="bi bi-trash3-fill"
+    variant="danger"
+    [isLoading]="isDeleting()"
+    (confirmed)="confirmDelete()"
+    (cancelled)="closeDeleteModal()"
+  ></app-comfirm-modal>
+}
+
+<!-- ============================
+     ADD MODAL
+     ============================ -->
+@if (showAddModal) {
+  <app-add-product-modal
+    [isAdding]="isAdding()"
+    [categoriesList]="categoriesList"
+    (confirmAddEvent)="confirmAdd($event)"
+    (closeAddModalEvent)="closeAddModal()"
+  ></app-add-product-modal>
+}
+
+<!-- ============================
+     EDIT MODAL
+     ============================ -->
+@if (showEditModal) {
+  <app-edit-product-modal
+    [editForm]="editForm"
+    [isUpdating]="isUpdating()"
+    [categoriesList]="categoriesList"
+    (confirmEditEvent)="confirmEdit($event)"
+    (closeEditModalEvent)="closeEditModal()"
+  ></app-edit-product-modal>
+}
+
+<!-- ============================
+     VIEW PRODUCT MODAL
+     ============================ -->
+@if (showViewModal) {
+  <app-view-product-modal
+    [product]="productToView"
+    (edit)="openEditModal($event); closeViewModal()"
+    (delete)="openDeleteModal($event); closeViewModal()"
+    (close)="closeViewModal()"
+  ></app-view-product-modal>
+}
