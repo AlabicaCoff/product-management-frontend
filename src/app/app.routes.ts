@@ -4,6 +4,7 @@ import { ListCategory } from './pages/category/list-category/list-category';
 import { NotFound } from './pages/not-found/not-found';
 import { Login } from './pages/auth/login/login';
 import { MainLayout } from './shared/components/main-layout/main-layout';
+import { authGuard } from './core/guards/auth-guard';
 
 export const routes: Routes = [
     // Pages WITHOUT sidebar & user-profile
@@ -24,11 +25,13 @@ export const routes: Routes = [
             },
             {
                 path: "products",
-                component: ListProduct
+                component: ListProduct,
+                canActivate: [authGuard]
             },
             {
                 path: "categories",
-                component: ListCategory
+                component: ListCategory,
+                canActivate: [authGuard]
             }
         ]
     },

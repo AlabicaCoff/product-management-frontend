@@ -24,11 +24,11 @@
   <!-- Optional Bottom Section (e.g., User logout) -->
   <hr />
   <div class="dropdown">
-    <a
-      href="/logout"
-      class="d-flex align-items-center text-decoration-none logout-btn"
+    <button
+      (click)="logout()"
+      class="d-flex align-items-center text-decoration-none bg-transparent logout-btn"
     >
       <strong>Logout</strong>
-    </a>
+    </button>
   </div>
 </div>
