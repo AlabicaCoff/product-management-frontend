@@ -1,17 +1,17 @@
 export interface LoginRequest {
-  username: string;
+  userName: string;
   password: string;
 }
 
 export interface LoginResponse {
   isLoginSuccess: boolean;
   failureMessage: string;
-  username: string;
+  userName: string;
   token: string;
   roles: string[];
 }
 
 export interface User {
-  username: string;
+  userName: string;
   roles: string[];
 }

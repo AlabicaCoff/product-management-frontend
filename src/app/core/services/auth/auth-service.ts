@@ -30,12 +30,12 @@ export class AuthService {
   }
 
   getUser(): User | null {
-    const username = localStorage.getItem('user-username');
+    const userName = localStorage.getItem('user-username');
     const roles = localStorage.getItem('user-roles');
 
-    if (username && roles?.split(',')) {
+    if (userName && roles?.split(',')) {
       const user: User = {
-        username: username,
+        userName: userName,
         roles: roles.split(','),
       };
       return user;
@@ -45,7 +45,7 @@ export class AuthService {
 
   setUser(user: User): void {
     this.$user.next(user);
-    localStorage.setItem('user-username', user.username);
+    localStorage.setItem('user-username', user.userName);
     localStorage.setItem('user-roles', user.roles.join(','));
   }
 }

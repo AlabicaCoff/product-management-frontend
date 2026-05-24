@@ -17,7 +17,7 @@ export class Login {
   errorMessage: string = '';
 
   loginForm: FormGroup = new FormGroup({
-    username: new FormControl('', Validators.required),
+    userName: new FormControl('', Validators.required),
     password: new FormControl('', Validators.required),
   });
 
@@ -29,12 +29,13 @@ export class Login {
   // Functions
   onFormSubmit(): void {
     const loginRequest: LoginRequest = {
-      username: this.loginForm.value.username,
+      userName: this.loginForm.value.userName,
       password: this.loginForm.value.password,
     };
 
     this.authService.login(loginRequest).subscribe({
       next: (response: LoginResponse) => {
+        console.log(response)
         if (response.isLoginSuccess) {
           // Set Auth Cookie
           this.cookieService.set(
@@ -49,7 +50,7 @@ export class Login {
 
           // Set User
           this.authService.setUser({
-            username: response.username,
+            userName: response.userName,
             roles: response.roles,
           });
 
