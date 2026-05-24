@@ -1,0 +1,247 @@
+/* =============================================
+   Modals
+   ============================================= */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.55);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 1rem;
+  animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.modal-card {
+  background: #fff;
+  border-radius: 20px;
+  padding: 2.25rem 2rem;
+  width: 100%;
+  max-width: 420px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.18);
+  text-align: center;
+  animation: popUp 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes popUp {
+  from { opacity: 0; transform: scale(0.88); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+.modal-icon-wrap {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.25rem;
+  font-size: 1.5rem;
+}
+
+.modal-icon-wrap--danger {
+  background: #fee2e2;
+  color: #dc2626;
+}
+
+.modal-icon-wrap--edit {
+  background: #e8f0fe;
+  color: #0d6efd;
+}
+
+.modal-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #1a1a2e;
+  margin: 0 0 0.5rem;
+}
+
+.modal-desc {
+  font-size: 0.875rem;
+  color: #6c757d;
+  margin: 0 0 1.75rem;
+  line-height: 1.6;
+}
+
+/* Edit Form inside modal */
+.modal-card--edit {
+  max-width: 460px;
+  text-align: left;
+}
+
+.modal-card--edit .modal-title {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.modal-card--edit .modal-icon-wrap {
+  display: flex;   /* keep flex so the icon stays centered */
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.modal-card--edit .modal-title,
+.modal-card--edit .modal-desc {
+  text-align: center;
+}
+
+.edit-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 1.75rem;
+  text-align: left;
+}
+
+.edit-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.edit-label {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #343a40;
+}
+
+.required {
+  color: #dc2626;
+}
+
+.edit-input {
+  width: 100%;
+  padding: 0.65rem 0.9rem;
+  font-size: 0.9rem;
+  font-family: 'Inter', sans-serif;
+  border: 1.5px solid #dee2e6;
+  border-radius: 10px;
+  background: #fff;
+  color: #212529;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  box-sizing: border-box;
+}
+
+.edit-input:focus {
+  outline: none;
+  border-color: #0d6efd;
+  box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.12);
+}
+
+.edit-textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.edit-error {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: #dc2626;
+  background: #fee2e2;
+  border-radius: 8px;
+  padding: 0.6rem 0.85rem;
+}
+
+/* Modal action buttons */
+.modal-actions {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: center;
+}
+
+.modal-card--edit .modal-actions {
+  justify-content: flex-end;
+}
+
+.btn-modal {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.65rem 1.4rem;
+  border: none;
+  border-radius: 10px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  font-family: 'Inter', sans-serif;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-modal:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+.btn-modal--cancel {
+  background: #f1f3f5;
+  color: #495057;
+}
+
+.btn-modal--cancel:not(:disabled):hover {
+  background: #e9ecef;
+}
+
+.btn-modal--danger {
+  background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+  color: #fff;
+  box-shadow: 0 4px 14px rgba(220, 38, 38, 0.3);
+}
+
+.btn-modal--danger:not(:disabled):hover {
+  box-shadow: 0 6px 20px rgba(220, 38, 38, 0.4);
+  transform: translateY(-1px);
+}
+
+.btn-modal--primary {
+  background: linear-gradient(135deg, #0d6efd 0%, #0a58ca 100%);
+  color: #fff;
+  box-shadow: 0 4px 14px rgba(13, 110, 253, 0.3);
+}
+
+.btn-modal--primary:not(:disabled):hover {
+  box-shadow: 0 6px 20px rgba(13, 110, 253, 0.4);
+  transform: translateY(-1px);
+}
+
+/* Spinner */
+.btn-spinner {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ---- Responsive ---- */
+@media (max-width: 576px) {
+  .page-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .action-btns {
+    flex-direction: column;
+  }
+
+  .modal-card {
+    padding: 1.75rem 1.25rem;
+  }
+}

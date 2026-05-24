@@ -1,0 +1,64 @@
+<div class="modal-backdrop" (click)="closeEditModal()">
+  <div class="modal-card modal-card--edit" (click)="$event.stopPropagation()" id="edit-modal">
+    <div class="modal-icon-wrap modal-icon-wrap--edit">
+      <i class="bi bi-pencil-fill"></i>
+    </div>
+    <h2 class="modal-title">Edit Category</h2>
+    <p class="modal-desc">Update the details for this category.</p>
+
+    <form class="edit-form" [formGroup]="form">
+      <!-- Name -->
+      <div class="edit-form-group">
+        <label for="edit-name" class="edit-label">Name <span class="required">*</span></label>
+        <input
+          id="edit-name"
+          type="text"
+          class="edit-input"
+          placeholder="Category name"
+          formControlName="name"
+          [class.input-error]="form.controls['name'].invalid && form.controls['name'].touched"
+        />
+        @if (form.controls['name'].invalid && form.controls['name'].touched) {
+          <span class="text-danger">Name is required.</span>
+        }
+      </div>
+
+      <!-- Description -->
+      <div class="edit-form-group">
+        <label for="edit-description" class="edit-label">Description</label>
+        <textarea
+          id="edit-description"
+          class="edit-input edit-textarea"
+          placeholder="Category description"
+          formControlName="description"
+          rows="3"
+        ></textarea>
+      </div>
+    </form>
+
+    <div class="modal-actions">
+      <button
+        class="btn-modal btn-modal--cancel"
+        (click)="closeEditModal()"
+        id="edit-cancel-btn"
+        [disabled]="isUpdating"
+      >
+        Cancel
+      </button>
+      <button
+        class="btn-modal btn-modal--primary"
+        (click)="confirmEdit()"
+        id="edit-save-btn"
+        [disabled]="isUpdating || form.invalid"
+      >
+        @if (isUpdating) {
+          <span class="btn-spinner"></span>
+          Saving…
+        } @else {
+          <i class="bi bi-check-lg"></i>
+          Save Changes
+        }
+      </button>
+    </div>
+  </div>
+</div>

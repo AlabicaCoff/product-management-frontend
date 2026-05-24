@@ -1,0 +1,56 @@
+<div class="modal-backdrop" (click)="onCancel()">
+  <div
+    class="modal-card"
+    [class.modal-card--danger]="variant === 'danger'"
+    [class.modal-card--warning]="variant === 'warning'"
+    [class.modal-card--primary]="variant === 'primary'"
+    (click)="$event.stopPropagation()"
+    id="confirm-modal"
+  >
+    <!-- Icon -->
+    <div
+      class="modal-icon-wrap"
+      [class.modal-icon-wrap--danger]="variant === 'danger'"
+      [class.modal-icon-wrap--warning]="variant === 'warning'"
+      [class.modal-icon-wrap--primary]="variant === 'primary'"
+    >
+      <i [class]="iconClass"></i>
+    </div>
+
+    <!-- Title -->
+    <h2 class="modal-title">{{ title }}</h2>
+
+    <!-- Message -->
+    <p class="modal-desc">{{ message }}</p>
+
+    <!-- Actions -->
+    <div class="modal-actions">
+      <button
+        class="btn-modal btn-modal--cancel"
+        (click)="onCancel()"
+        id="confirm-modal-cancel-btn"
+        [disabled]="isLoading"
+      >
+        Cancel
+      </button>
+
+      <button
+        class="btn-modal"
+        [class.btn-modal--danger]="variant === 'danger'"
+        [class.btn-modal--warning]="variant === 'warning'"
+        [class.btn-modal--primary]="variant === 'primary'"
+        (click)="onConfirm()"
+        id="confirm-modal-confirm-btn"
+        [disabled]="isLoading"
+      >
+        @if (isLoading) {
+          <span class="btn-spinner"></span>
+          <span>Loading…</span>
+        } @else {
+          <i [class]="iconClass"></i>
+          <span>{{ confirmLabel }}</span>
+        }
+      </button>
+    </div>
+  </div>
+</div>

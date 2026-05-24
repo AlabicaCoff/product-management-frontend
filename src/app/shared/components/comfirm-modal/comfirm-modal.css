@@ -1,0 +1,196 @@
+/* =============================================
+   Confirm Modal — Shared Component Styles
+   ============================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+:host {
+  font-family: 'Inter', sans-serif;
+}
+
+/* ---- Backdrop ---- */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.55);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 1rem;
+  animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* ---- Card ---- */
+.modal-card {
+  background: #fff;
+  border-radius: 20px;
+  padding: 2.25rem 2rem;
+  width: 100%;
+  max-width: 420px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.18);
+  text-align: center;
+  animation: popUp 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes popUp {
+  from { opacity: 0; transform: scale(0.88); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+/* ---- Icon Wrap ---- */
+.modal-icon-wrap {
+  width: 62px;
+  height: 62px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.25rem;
+  font-size: 1.5rem;
+}
+
+/* Danger */
+.modal-icon-wrap--danger {
+  background: #fee2e2;
+  color: #dc2626;
+}
+
+/* Warning */
+.modal-icon-wrap--warning {
+  background: #fef3c7;
+  color: #d97706;
+}
+
+/* Primary */
+.modal-icon-wrap--primary {
+  background: #e8f0fe;
+  color: #0d6efd;
+}
+
+/* ---- Typography ---- */
+.modal-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #1a1a2e;
+  margin: 0 0 0.5rem;
+}
+
+.modal-desc {
+  font-size: 0.875rem;
+  color: #6c757d;
+  margin: 0 0 1.75rem;
+  line-height: 1.6;
+}
+
+/* ---- Action Buttons ---- */
+.modal-actions {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: center;
+}
+
+.btn-modal {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.65rem 1.4rem;
+  border: none;
+  border-radius: 10px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  font-family: 'Inter', sans-serif;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-modal:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+/* Cancel */
+.btn-modal--cancel {
+  background: #f1f3f5;
+  color: #495057;
+}
+
+.btn-modal--cancel:not(:disabled):hover {
+  background: #e9ecef;
+}
+
+/* Danger */
+.btn-modal--danger {
+  background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+  color: #fff;
+  box-shadow: 0 4px 14px rgba(220, 38, 38, 0.3);
+}
+
+.btn-modal--danger:not(:disabled):hover {
+  box-shadow: 0 6px 20px rgba(220, 38, 38, 0.4);
+  transform: translateY(-1px);
+}
+
+/* Warning */
+.btn-modal--warning {
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+  color: #fff;
+  box-shadow: 0 4px 14px rgba(245, 158, 11, 0.3);
+}
+
+.btn-modal--warning:not(:disabled):hover {
+  box-shadow: 0 6px 20px rgba(245, 158, 11, 0.4);
+  transform: translateY(-1px);
+}
+
+/* Primary */
+.btn-modal--primary {
+  background: linear-gradient(135deg, #0d6efd 0%, #0a58ca 100%);
+  color: #fff;
+  box-shadow: 0 4px 14px rgba(13, 110, 253, 0.3);
+}
+
+.btn-modal--primary:not(:disabled):hover {
+  box-shadow: 0 6px 20px rgba(13, 110, 253, 0.4);
+  transform: translateY(-1px);
+}
+
+/* ---- Spinner ---- */
+.btn-spinner {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+  flex-shrink: 0;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ---- Responsive ---- */
+@media (max-width: 576px) {
+  .modal-card {
+    padding: 1.75rem 1.25rem;
+  }
+
+  .modal-actions {
+    flex-direction: column-reverse;
+  }
+
+  .btn-modal {
+    justify-content: center;
+    width: 100%;
+  }
+}
