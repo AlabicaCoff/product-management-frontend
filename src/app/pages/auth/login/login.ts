@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormGroup, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
-import { LoginRequest, LoginResponse } from '../../../core/models/login';
+import { LoginRequest, LoginResponse } from '../../../core/models/login-model';
 import { AuthService } from '../../../core/services/auth/auth-service';
 import { CookieService } from 'ngx-cookie-service';
 
@@ -38,12 +38,12 @@ export class Login {
         if (response.isLoginSuccess) {
           // Set Auth Cookie
           this.cookieService.set(
-            'Authorization',
-            `Bearer ${response.token}`,
+            'accessToken',
+            `${response.token}`,
             undefined,
             '/',
             undefined,
-            true,
+            false, // NOTE: set to true in production (HTTPS only)
             'Strict',
           );
 
@@ -60,13 +60,9 @@ export class Login {
         }
       },
       error: (error) => {
-        if (error.status === 400 && error.error?.errors) {
-          const errorList = error.error.errors[''];
-          if (errorList && errorList.length > 0) {
-            this.errorMessage = errorList[0];
-          } else {
-            this.errorMessage = 'Invalid login credentials.';
-          }
+        if (error.status === 401) {
+          this.errorMessage =
+            error.error?.failureMessage ?? 'Invalid login credentials.';
         } else {
           this.errorMessage = 'An unexpected error occurred.';
         }

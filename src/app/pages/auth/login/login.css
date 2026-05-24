@@ -344,6 +344,21 @@
   transform: translateX(3px);
 }
 
+/* Error Message */
+.error-message {
+  background: #fff5f5;
+  border: 1.5px solid #f87171;
+  border-radius: 10px;
+  padding: 0.65rem 1rem;
+}
+
+.error-message p {
+  margin: 0;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #dc2626;
+}
+
 /* Footer Text */
 .login-footer-text {
   text-align: center;

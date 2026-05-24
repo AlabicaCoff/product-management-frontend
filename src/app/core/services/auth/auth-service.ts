@@ -2,7 +2,7 @@ import { Injectable, inject } from '@angular/core';
 
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { LoginRequest, LoginResponse, User } from '../../models/login';
+import { LoginRequest, LoginResponse, User } from '../../models/login-model';
 import { environment } from '../../../../environments/environment.development';
 import { CookieService } from 'ngx-cookie-service';
 
