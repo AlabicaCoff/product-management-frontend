@@ -1,59 +1,44 @@
-# ProductManagementFrontend
+# Product Management Frontend
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.0.4.
+## Introduction
+Product Management Web UI is a web-based application interface designed to integrate with the Product Management Web API, enabling authenticated users to manage product catalogs and categories.
 
-## Development server
+## Features
 
-To start a local development server, run:
+| Path | Page | Description |
+| --- | --- | --- |
+| /login | Login Page | Users can log in to their accounts. [cite_start]Unauthenticated users or expired tokens will be redirected here. |
+| /categories | Categories Page | Users can view all categories, add new categories, edit, and delete them. |
+| /products | Products Dashboard | Users can view products in a table with pagination and search by name. Users can also create, edit, view details, and delete products (with confirmation dialog). |
 
-```bash
-ng serve
-```
+* All product and category pages require JWT authentication. 
+* JWT tokens are automatically attached to outgoing API requests via HTTP Interceptors. 
+* Client-side form validation is enforced (e.g., Category Name is required, Product Name is required, Price > 0, Stock >= 0). 
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+## Development Quickstart
+This section offers a basic tutorial to tell you how to set up the Angular UI project.
 
-## Code scaffolding
+### Prerequisites
+* [VS Code](https://code.visualstudio.com/download)
+* [Node.js](https://nodejs.org/en/download)
+* [Angular CLI v21.0.4](https://angular.dev/tools/cli/setup-local)
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+## Installation Guide
+* Clone this repository to your local machine. 
+* Navigate to the frontend project directory.
+* Run `npm install` to install all dependencies.
 
-```bash
-ng generate component component-name
-```
+## Usage
+* Run `npm start` or `ng serve` to start the application.
+* Run the API project to start the backend server on port 5072.
+* Go to `http://localhost:4200/` in your browser to see the website.
+* **Default Login:** Use the mock credentials provided by the backend:
+  * for **admin user** use: username: `Admin@ProductManagement.com`, password: `Admin@123`
+  * for **non-admin user** use: username: `NonAdmin@ProductManagement.com`, password: `NonAdmin@123`
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+## Technologies Used
+* [Node.js](https://nodejs.org/)
+* [Angular v21](https://angular.dev/)
 
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+## Authors
+* [AlabicaCoff](https://github.com/AlabicaCoff)
