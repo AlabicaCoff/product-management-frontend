@@ -22,7 +22,7 @@ export class EditProductModal implements OnChanges {
   form: FormGroup = new FormGroup({
     name: new FormControl('', [Validators.required, Validators.minLength(1)]),
     description: new FormControl(''),
-    price: new FormControl(0, [Validators.required, Validators.min(0)]),
+    price: new FormControl(0, [Validators.required, Validators.min(0.01)]),
     stock: new FormControl(0, [Validators.required, Validators.min(0)]),
     categoryIds: new FormControl<string[]>([]),
   });
