@@ -372,6 +372,8 @@
 /* ---- Data Table ---- */
 .table-responsive {
   overflow-x: auto;
+  overflow-y: auto;
+  max-height: 600px;
 }
 
 .data-table {
@@ -381,7 +383,6 @@
 
 .data-table thead tr {
   background: #f8f9fb;
-  border-bottom: 2px solid #e9ecef;
 }
 
 .data-table thead th {
@@ -393,6 +394,11 @@
   color: #6c757d;
   white-space: nowrap;
   text-align: left;
+  position: sticky;
+  top: 0;
+  background: #f8f9fb;
+  z-index: 10;
+  border-bottom: 2px solid #e9ecef;
 }
 
 .sortable-header {
