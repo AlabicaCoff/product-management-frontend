@@ -30,6 +30,7 @@ This section offers a basic tutorial to tell you how to set up the Angular UI pr
 * Run `npm install` to install all dependencies.
 
 ## Usage
+* Configure your backend URL in `environment.development.ts`.
 * Run `npm start` or `ng serve` to start the application.
 * Run the API project to start the backend server on port 5072.
 * Go to `http://localhost:4200/` in your browser to see the website.
