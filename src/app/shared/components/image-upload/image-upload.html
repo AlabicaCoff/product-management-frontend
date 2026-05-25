@@ -1,0 +1,22 @@
+<div class="upload-container" (click)="triggerFileInput()">
+  <input 
+    #fileInput
+    class="file-input" 
+    type="file" 
+    accept="image/*" 
+    (change)="onFileSelected($event)">
+
+  @if (!previewUrl()) {
+    <div class="upload-placeholder">
+      <div class="plus-icon"></div>
+      <span class="upload-text">Upload Image</span>
+    </div>
+  } @else {
+    <div class="preview-container">
+      <img [src]="previewUrl()" alt="Selected File Preview" class="preview-image">
+      <div class="overlay" (click)="clearSelection(); $event.stopPropagation()">
+        <i class="bi bi-trash"></i>
+      </div>
+    </div>
+  }
+</div>

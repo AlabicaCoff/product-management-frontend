@@ -45,7 +45,7 @@
 }
 
 .modal-card--edit {
-  max-width: 480px;
+  max-width: 600px;
   text-align: left;
 }
 
@@ -158,6 +158,13 @@
   font-size: 0.78rem;
   color: #dc2626;
   font-weight: 500;
+}
+
+/* ---- Image Upload ---- */
+.image-upload-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 /* ---- Multi-select Dropdown ---- */

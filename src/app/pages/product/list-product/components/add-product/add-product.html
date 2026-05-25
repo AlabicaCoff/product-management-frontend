@@ -7,6 +7,11 @@
     <p class="modal-desc">Fill in the details to create a new product.</p>
 
     <form class="edit-form" [formGroup]="form">
+      <!-- Image Upload -->
+      <div class="edit-form-group image-upload-button">
+        <app-image-upload></app-image-upload>
+      </div>
+
       <!-- Name -->
       <div class="edit-form-group">
         <label for="add-name" class="edit-label">Name <span class="required">*</span></label>

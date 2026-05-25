@@ -17,6 +17,18 @@
       </div>
 
       <div class="view-content">
+        <!-- Product Image -->
+        <div class="product-image-container">
+          @if (product.imageUrl) {
+            <img [src]="product.imageUrl" alt="Product Image" class="product-full-image" />
+          } @else {
+            <div class="image-placeholder">
+              <i class="bi bi-image text-muted"></i>
+              <span class="text-muted mt-2">No image available</span>
+            </div>
+          }
+        </div>
+
         <!-- Description -->
         <div class="detail-group">
           <span class="detail-label">Description</span>

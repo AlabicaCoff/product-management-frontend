@@ -183,11 +183,21 @@
                   </td>
                   <td class="col-product">
                     <div class="product-info-cell">
-                      <img 
-                        class="product-img" 
-                        [src]="'https://ui-avatars.com/api/?name=' + product.name + '&background=random&size=150'" 
-                        [alt]="product.name"
-                      >
+                      @if (product.imageUrl) {
+                        <img 
+                          class="product-img" 
+                          [src]="product.imageUrl"
+                          [alt]="product.name"
+                        >
+                      } @else {
+                        <div class="image-placeholder">
+                          <img 
+                            class="product-img"
+                            [src]="'https://ui-avatars.com/api/?name=' + product.name + '&background=random&size=150'"
+                            [alt]="product.name"
+                          >
+                        </div>
+                      }
                       <div class="product-details">
                         <span class="prod-name">{{ product.name }}</span>
                         <span class="prod-desc">{{ product.description || 'No description' }}</span>

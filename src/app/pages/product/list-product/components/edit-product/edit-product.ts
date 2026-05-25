@@ -3,11 +3,12 @@ import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angula
 import { UpdateProductRequest } from '../../../../../core/models/product-model';
 import { Category } from '../../../../../core/models/category-model';
 import { CommonModule } from '@angular/common';
+import { ImageUpload } from '../../../../../shared/components/image-upload/image-upload';
 
 @Component({
   selector: 'app-edit-product-modal',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule],
+  imports: [ReactiveFormsModule, CommonModule, ImageUpload],
   templateUrl: './edit-product.html',
   styleUrl: './edit-product.css',
 })

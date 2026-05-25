@@ -7,6 +7,7 @@ export interface Product {
   createdDate: string;
   updatedDate: string;
   categories: string[];
+  imageUrl?: string;
 }
 
 interface ProductRequest {
@@ -15,6 +16,7 @@ interface ProductRequest {
   price: number;
   stock: number;
   categoryIds: string[];
+  imageUrl?: string;
 }
 
 export interface CreateProductRequest extends ProductRequest {}
