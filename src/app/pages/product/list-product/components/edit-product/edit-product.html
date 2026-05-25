@@ -9,9 +9,12 @@
     <form class="edit-form" [formGroup]="form">
       <!-- Image Upload -->
       <div class="edit-form-group image-upload-button">
-        <app-image-upload></app-image-upload>
+        <app-image-upload
+          (imageUploadEvent)="onImageUpload($event!)"
+          [existingImageUrl]="editForm.imageUrl"
+        ></app-image-upload>
       </div>
-      
+
       <!-- Name -->
       <div class="edit-form-group">
         <label for="edit-name" class="edit-label">Name <span class="required">*</span></label>

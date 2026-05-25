@@ -14,7 +14,7 @@
   } @else {
     <div class="preview-container">
       <img [src]="previewUrl()" alt="Selected File Preview" class="preview-image">
-      <div class="overlay" (click)="clearSelection(); $event.stopPropagation()">
+      <div class="overlay" (click)="clearSelection($event)">
         <i class="bi bi-trash"></i>
       </div>
     </div>

@@ -18,6 +18,7 @@ export class AddProductModal {
 
   @Output() confirmAddEvent = new EventEmitter<CreateProductRequest>();
   @Output() closeAddModalEvent = new EventEmitter<void>();
+  @Output() imageUploadEvent = new EventEmitter<File>();
 
   form: FormGroup = new FormGroup({
     name: new FormControl('', [Validators.required, Validators.minLength(1)]),
@@ -29,13 +30,15 @@ export class AddProductModal {
 
   dropdownOpen = false;
 
+  uploadedFile: File | null = null;
+
   onCategoryChange(event: any, categoryId: string) {
     const categoryIds = this.form.get('categoryIds') as FormControl;
     const currentValues = categoryIds.value as string[];
     if (event.target.checked) {
       categoryIds.setValue([...currentValues, categoryId]);
     } else {
-      categoryIds.setValue(currentValues.filter(id => id !== categoryId));
+      categoryIds.setValue(currentValues.filter((id) => id !== categoryId));
     }
   }
 
@@ -44,13 +47,16 @@ export class AddProductModal {
   }
 
   getCategoryName(id: string): string {
-    return this.categoriesList.find(c => c.id === id)?.name || id;
+    return this.categoriesList.find((c) => c.id === id)?.name || id;
   }
 
   confirmAdd(): void {
     if (this.form.invalid) {
       this.form.markAllAsTouched();
       return;
+    }
+    if (this.uploadedFile) {
+      this.imageUploadEvent.emit(this.uploadedFile);
     }
     this.confirmAddEvent.emit(this.form.value as CreateProductRequest);
   }
@@ -59,5 +65,9 @@ export class AddProductModal {
     this.closeAddModalEvent.emit();
     this.form.reset({ price: 0, stock: 0, categoryIds: [] });
     this.dropdownOpen = false;
+  }
+
+  onImageUpload(file: File): void {
+    this.uploadedFile = file;
   }
 }

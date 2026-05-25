@@ -9,7 +9,7 @@
     <form class="edit-form" [formGroup]="form">
       <!-- Image Upload -->
       <div class="edit-form-group image-upload-button">
-        <app-image-upload></app-image-upload>
+        <app-image-upload (imageUploadEvent)="onImageUpload($event)"></app-image-upload>
       </div>
 
       <!-- Name -->

@@ -19,6 +19,7 @@ export class EditProductModal implements OnChanges {
 
   @Output() confirmEditEvent = new EventEmitter<UpdateProductRequest>();
   @Output() closeEditModalEvent = new EventEmitter<void>();
+  @Output() imageUploadEvent = new EventEmitter<File>();
 
   form: FormGroup = new FormGroup({
     name: new FormControl('', [Validators.required, Validators.minLength(1)]),
@@ -29,6 +30,7 @@ export class EditProductModal implements OnChanges {
   });
 
   dropdownOpen = false;
+  uploadedFile: File | null = null;
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['editForm'] && this.editForm) {
@@ -65,11 +67,18 @@ export class EditProductModal implements OnChanges {
       this.form.markAllAsTouched();
       return;
     }
+    if (this.uploadedFile) {
+      this.imageUploadEvent.emit(this.uploadedFile);
+    }
     this.confirmEditEvent.emit(this.form.value as UpdateProductRequest);
   }
 
   closeEditModal(): void {
     this.closeEditModalEvent.emit();
     this.dropdownOpen = false;
+  }
+
+  onImageUpload(file: File): void {
+    this.uploadedFile = file;
   }
 }
